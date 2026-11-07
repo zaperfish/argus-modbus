@@ -1,7 +1,7 @@
 use crate::error::{DecodeError, EncodeError};
 
-use mbap::Mbap;
-use pdu::Pdu;
+pub use mbap::Mbap;
+pub use pdu::Pdu;
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct TcpAdu<'a> {
