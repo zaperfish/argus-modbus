@@ -10,6 +10,11 @@ pub struct TcpAdu<'a> {
 }
 
 pub fn encode_into_slice(adu: &TcpAdu, dst: &mut [u8]) -> Result<usize, EncodeError> {
+    let expected_length = 2 + adu.pdu.data.len();
+    if adu.mbap.length as usize != expected_length || expected_length > 254 {
+        return Err(EncodeError::InvalidLength);
+    }
+
     let mbap_bytes = mbap::encode_into_slice(&adu.mbap, dst)?;
     let pdu_bytes = pdu::encode_into_slice(&adu.pdu, &mut dst[mbap_bytes..])?;
 
